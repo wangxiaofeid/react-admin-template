@@ -1,20 +1,99 @@
+import { useState, useEffect, useCallback } from "react";
 import { Menu, Icon } from "antd";
+import { withRouter } from "react-router";
+import { NavLink } from "react-router-dom";
+import { filter } from "lodash";
+import logoImg from "@/resource/images/logo.svg";
 
-export default function SideMenu() {
+const { SubMenu, Item: MenuItem } = Menu;
+const menuTree = [
+  {
+    name: "菜单组1",
+    code: "group1",
+    icon: "mail",
+    children: [
+      {
+        name: "demo1",
+        code: "demo",
+        url: "/demo"
+      }
+    ]
+  },
+  {
+    name: "菜单组2",
+    code: "group2",
+    icon: "exclamation-circle",
+    children: [
+      {
+        name: "403",
+        code: "403",
+        url: "/403"
+      },
+      {
+        name: "404",
+        code: "404",
+        url: "/404"
+      }
+    ]
+  }
+];
+
+function SideMenu({ collapsed, location }) {
+  const [openKeys, setOpenKeys] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState(false);
+
+  const onOpenChange = useCallback((newKeys) => {
+    setOpenKeys((openKeys) => {
+      return filter(newKeys, (key) => !openKeys.includes(key));
+    });
+  }, []);
+
+  useEffect(() => {
+    for (let i = 0; i < menuTree.length; i++) {
+      const { code, children } = menuTree[i];
+      for (let j = 0; j < children.length; j++) {
+        const { url, code: cCode } = children[j];
+        if (url === location.pathname) {
+          setOpenKeys([code]);
+          setSelectedKeys([cCode]);
+        }
+      }
+    }
+  }, [location.pathname]);
+
   return (
-    <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-      <Menu.Item key="1">
-        <Icon type="user" />
-        <span>nav 1</span>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Icon type="video-camera" />
-        <span>nav 2</span>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Icon type="upload" />
-        <span>nav 3</span>
-      </Menu.Item>
-    </Menu>
+    <>
+      <div className="logo">
+        <img src={logoImg} />
+        {!collapsed && "后台管理"}
+      </div>
+      <Menu
+        theme="dark"
+        mode="inline"
+        openKeys={openKeys}
+        selectedKeys={selectedKeys}
+        onOpenChange={onOpenChange}
+      >
+        {menuTree.map(({ code, name, icon, children }) => (
+          <SubMenu
+            key={code}
+            title={
+              <span>
+                <Icon type={icon} />
+                <span>{name}</span>
+              </span>
+            }
+          >
+            {children?.map(({ code, name, url }) => (
+              <MenuItem key={code}>
+                <NavLink to={url}>{name}</NavLink>
+              </MenuItem>
+            ))}
+          </SubMenu>
+        ))}
+      </Menu>
+    </>
   );
 }
+
+export default withRouter(SideMenu);

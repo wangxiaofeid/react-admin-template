@@ -1,6 +1,6 @@
-import React from "react";
 import { get } from "lodash";
 import { message } from "antd";
+import { isDev } from "@/constants/systemConfig";
 
 // JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
 export function getStrLen(str) {
@@ -18,7 +18,7 @@ export function getStrLen(str) {
 }
 
 export function reBytesStr(str, len) {
-  if (!str && typeof str != "undefined") {
+  if (!str && typeof str !== "undefined") {
     return "";
   }
   let num = 0;

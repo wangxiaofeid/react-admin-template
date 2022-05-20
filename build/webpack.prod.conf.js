@@ -45,8 +45,8 @@ module.exports = merge(baseWebpackConfig, {
       chunksSortMode: "none"
     }),
     new MiniCssExtractPlugin({
-      filename: "css/[name].css",
-      chunkFilename: "css/[id].css",
+      filename: "css/[name].[contenthash:8].css",
+      chunkFilename: "css/[name].[chunkhash:8].css",
       ignoreOrder: true
     }),
     new BranchPlugin({

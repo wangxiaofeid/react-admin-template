@@ -29,7 +29,7 @@ export default function Router() {
       {menus.map(({ path, component }) => {
         return <Route key={path} path={path} component={authCheckHOC(path, component)} />;
       })}
-      <Redirect to="/404" />
+      <Redirect to="/demo" />
     </Switch>
   );
 }
