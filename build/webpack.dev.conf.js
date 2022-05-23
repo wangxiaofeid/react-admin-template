@@ -11,8 +11,8 @@ const { IS_MOCK } = process.env;
 module.exports = merge(baseWebpackConfig, {
   mode: "development",
   output: {
-    filename: "static-qiming/js/[name].js",
-    chunkFilename: "static-qiming/js/[name].js",
+    filename: "js/[name].js",
+    chunkFilename: "js/[name].js",
     publicPath: config.dev.assetsPublicPath
     // publicPath: config.build.assetsPublicPath,
   },

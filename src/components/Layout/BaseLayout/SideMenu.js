@@ -39,8 +39,8 @@ const menuTree = [
 ];
 
 function SideMenu({ collapsed, location }) {
-  const [openKeys, setOpenKeys] = useState(false);
-  const [selectedKeys, setSelectedKeys] = useState(false);
+  const [openKeys, setOpenKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
 
   const onOpenChange = useCallback((newKeys) => {
     setOpenKeys((openKeys) => {
