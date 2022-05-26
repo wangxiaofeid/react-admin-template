@@ -55,10 +55,12 @@ module.exports = {
           {
             loader: "less-loader",
             options: {
-              modules: false,
-              javascriptEnabled: true,
-              modifyVars: {
-                hack: 'true; @import "~@/styles/theme.less";'
+              lessOptions: {
+                modules: false,
+                javascriptEnabled: true,
+                modifyVars: {
+                  hack: 'true; @import "~@/styles/theme.less";'
+                }
               }
             }
           }
